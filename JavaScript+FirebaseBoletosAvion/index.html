@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS + Firebase</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.17.2/firebase-database.js"></script>
+    <script src="index.js"></script>
+</head>
+
+<body onload="read()"> 
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">JS + Firebase Boletos de Avion</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarText">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Registro de Boletos<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="./consulta.html">Consulta</a>
+                </li>
+            </ul>
+
+        </div>
+    </nav>
+
+    <div class="container p-3 my-3">
+        <div class="row">
+            <style type="text/css">
+        body
+           {
+              background: linear-gradient(to right, rgb(255, 255, 255), rgb(140, 18, 136));
+              font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif, Helvetica, sans-serif;
+           }
+
+       </style>
+
+            <div class="col-md-2">
+                <h3 style="text-align:left">Volaris</h3><img src="VLRS.png" width="80" height="80">
+
+                <form action="#">
+                    <div class="form-group ">
+                        <label for="Input1">Codigo de Boleto</label>
+                        <input type="text " class="form-control " id="Input1" placeholder="Codigo">
+                    </div>
+                    <div class="form-group ">
+                        <label for="Input1">Nombre</label>
+                        <input type="text " class="form-control " id="Input2" placeholder="Nombre">
+                    </div>
+                    <div class="form-group">
+                        <label for="Input2">Apellido</label>
+                        <input type="text" class="form-control" id="Input3" placeholder="Apellido">
+                    </div>
+                    <div class="form-group">
+                        <label for="Input3">Desde</label>
+                        <input type="text" class="form-control" id="Input4" placeholder="Desde">
+                    </div>
+                    <div class="form-group">
+                        <label for="Input4">Hasta</label>
+                        <input type="text" class="form-control" id="Input5" placeholder="Hasta">
+                    </div>
+                    <div class="form-group">
+                        <label for="Input5">Fecha de Salida</label>
+                        <input type="text" class="form-control" id="Input6" placeholder="Fecha">
+                    </div>
+                    <div class="form-group">
+                        <label for="Input6">Fecha de Regreso</label>
+                        <input type="text" class="form-control" id="Input7" placeholder="Fecha">
+                    </div>
+                    <div class="form-group ">
+                        <label for="Input8">Pasajeros</label>
+                        <select class="form-control " id="Input8">
+                            <option value="selecciona">selecciona</option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                        </select>
+                    </div>
+                    <button type="submit " class="btn btn-primary" onclick="createR()">Registrar</button>
+                    <button type="reset " class="btn btn-secondary" onclick="resetFields()">Limpiar</button>
+                </form>
+
+
+
+            </div>
+            <div class="col-md-9">
+                <h3 style="text-align:center">Registro de Boletos</h3>
+
+                <table class="table table-hover">
+                    <thead>
+                      <tr>
+                        <th scope="col">Codigo de Boleto</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Apellido</th>
+                        <th scope="col">Desde</th>
+                        <th scope="col">Hasta</th>
+                        <th scope="col">Fecha de Salida</th>
+                        <th scope="col">Fecha de Regreso</th>
+                        <th scope="col">Pasajeros</th>
+                        <th scope="col"></th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+                    <tbody id='Table1'>
+
+
+                    </tbody>
+                  </table>
+                
+            </div>
+
+        </div>
+    </div>
+
+</body>
+
+
+</html>
